@@ -5,7 +5,7 @@ from django.http import JsonResponse
 from .models import User
 
 def index(request):
-    return HttpResponse(serializers.serialize('json', User.objects.all()))
+    return HttpResponse(serializers.serialize('json', User.objects.all()), content_type='application/json')
 
 def detail(request, user_id):
 

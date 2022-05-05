@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'quickstart.apps.QuickstartConfig',
     'users.apps.QuickstartConfig',
+    'genres.apps.QuickstartConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

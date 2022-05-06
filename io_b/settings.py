@@ -34,6 +34,8 @@ INSTALLED_APPS = [
     'quickstart.apps.QuickstartConfig',
     'users.apps.QuickstartConfig',
     'genres.apps.QuickstartConfig',
+    'reviews.apps.QuickstartConfig',
+    'games.apps.GamesConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

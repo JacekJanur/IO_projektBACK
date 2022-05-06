@@ -5,5 +5,7 @@ urlpatterns = [
     path('quickstart/', include('quickstart.urls')),
     path('users/', include('users.urls')),
     path('genres/', include('genres.urls')),
+    path('reviews/', include('reviews.urls')),
+    path('games/', include('games.urls')),
     path('admin/', admin.site.urls),
 ]

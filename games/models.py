@@ -1,5 +1,6 @@
 from django.db import models
 from genres.models import Genre
+from users.models import User
 
 class Game(models.Model):
     name = models.CharField(max_length=200)

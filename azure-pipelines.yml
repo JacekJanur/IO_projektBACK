@@ -41,6 +41,7 @@ steps:
 - script: |
     pip install virtualenv
     pip install django
+    pip install xmlrunner
     virtualenv .env
     source .env/bin/activate
     python -m pip install --upgrade pip setuptools wheel

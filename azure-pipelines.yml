@@ -10,8 +10,6 @@ pool:
   vmImage: ubuntu-latest
 strategy:
   matrix:
-    Python35:
-      PYTHON_VERSION: '3.5'
     Python36:
       PYTHON_VERSION: '3.6'
     Python37:
@@ -42,6 +40,7 @@ steps:
 
 - script: |
     pip install virtualenv
+    pip install django
     virtualenv .env
     source .env/bin/activate
     python -m pip install --upgrade pip setuptools wheel

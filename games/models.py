@@ -13,3 +13,4 @@ class Game(models.Model):
         reviews = apps.get_model('reviews.Review')
         return reviews.objects.filter(game=self)
 
+

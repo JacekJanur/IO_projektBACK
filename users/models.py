@@ -10,3 +10,11 @@ class User(models.Model):
     def reviews(self):
         reviews = apps.get_model('reviews.Review')
         return reviews.objects.filter(user=self)
+
+    def ifMailExist(email):
+        try:
+            match = User.objects.get(email=email)
+        except User.DoesNotExist:
+            # Unable to find a user, this is fine
+            return False
+        return True

@@ -16,3 +16,10 @@ def detail(request, user_id):
         ret =  JsonResponse({'status':404,'message':"user not found"})
     return ret
 
+def reviews(request, user_id):
+    if User.objects.filter(pk=user_id).exists():
+        reviews = User.objects.get(pk=user_id).reviews()
+        ret = HttpResponse(serializers.serialize("json", reviews), content_type='application/json')
+    else:
+        ret =  JsonResponse({'status':404,'message':"reviews not found"})
+    return ret

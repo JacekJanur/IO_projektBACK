@@ -18,3 +18,5 @@ class User(models.Model):
             # Unable to find a user, this is fine
             return False
         return True
+
+    

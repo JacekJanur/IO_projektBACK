@@ -1,4 +1,5 @@
 from django.db import models
+from rest_framework import serializers
 
 class Review(models.Model):
     user = models.ForeignKey('users.User', on_delete=models.CASCADE)
@@ -7,3 +8,8 @@ class Review(models.Model):
 
     class Meta:
         unique_together = [['user', 'game']]
+
+class ReviewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Review
+        fields = '__all__'

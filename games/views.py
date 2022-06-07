@@ -14,7 +14,6 @@ from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
 from django.apps import apps
 
-
 @api_view(('GET',))
 def index(request):
     games=Game.objects.all()
@@ -39,4 +38,13 @@ def reviews(request, game_id):
         ret = Response(serializer.data, status= status.HTTP_200_OK)
     else:
         ret = Response({'message':"review not found"}, status= status.HTTP_404_NOT_FOUND)
+    return ret
+
+@api_view(('GET',))
+def image(request, game_id):
+    if Game.objects.filter(pk=game_id).exists():
+        image = Game.objects.get(pk=game_id).image
+        ret = HttpResponse(image, content_type="image/png")
+    else:
+        ret = Response({'message':"game not found"}, status= status.HTTP_404_NOT_FOUND)
     return ret

@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.http import JsonResponse
 from .models import Game
 from .models import GameSerializerAvg
+from .models import GameSerializerComments
 from reviews.models import ReviewSerializer
 
 from rest_framework.response import Response
@@ -24,7 +25,7 @@ def index(request):
 def detail(request, game_id):
     if Game.objects.filter(pk=game_id).exists():
         game = Game.objects.get(pk=game_id)
-        serializer = GameSerializerAvg(game)
+        serializer = GameSerializerComments(game)
         ret = Response(serializer.data, status= status.HTTP_200_OK)
     else:
         ret = Response({'message':"game not found"}, status= status.HTTP_404_NOT_FOUND)

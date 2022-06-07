@@ -4,6 +4,8 @@ from users.models import User
 from django.apps import apps
 from rest_framework import serializers
 from itertools import chain
+from comments.models import CommentSerializer
+from comments.models import Comment
 
 class Game(models.Model):
     name = models.CharField(max_length=200)
@@ -27,6 +29,19 @@ class GameSerializerAvg(serializers.ModelSerializer):
     class Meta:
         model = Game
         fields = '__all__'
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation['avg'] = instance.avg
+
+        return representation
+
+class GameSerializerComments(serializers.ModelSerializer):
+    comments = CommentSerializer(many=True, required=False)
+
+    class Meta:
+        model = Game
+        fields = ['id', 'description', 'genre', 'photo', 'name','comments']
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)

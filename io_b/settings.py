@@ -138,3 +138,4 @@ ALLOWED_HOSTS=['*']
 
 CORS_ORIGIN_ALLOW_ALL = True
 
+CSRF_TRUSTED_ORIGINS = ['https://jacekjanurbackend.azurewebsites.net']

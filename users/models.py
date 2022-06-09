@@ -19,4 +19,10 @@ class User(models.Model):
             return False
         return True
 
-    
+    def getUserByToken(t):
+        try:
+            match = User.objects.get(token=t)
+        except User.DoesNotExist:
+            # Unable to find a user, this is fine
+            return None
+        return match

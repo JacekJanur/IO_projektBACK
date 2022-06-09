@@ -26,6 +26,10 @@ class Game(models.Model):
             suma += review.review
         return 0 if len(reviews) == 0 else suma/len(reviews)
 
+    @property
+    def genre_name(self):
+        return self.genre.name
+
 class GameSerializerAvg(serializers.ModelSerializer):
     class Meta:
         model = Game
@@ -42,10 +46,11 @@ class GameSerializerComments(serializers.ModelSerializer):
 
     class Meta:
         model = Game
-        fields = ['id', 'description', 'genre', 'name','comments']
+        fields = ['id', 'description', 'name','comments']
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)
         representation['avg'] = instance.avg
+        representation['genre_name'] = instance.genre_name
 
         return representation

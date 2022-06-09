@@ -7,6 +7,13 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.hashers import make_password, check_password
 from datetime import date
 
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+from rest_framework import status
+from rest_framework.renderers import JSONRenderer
+from rest_framework.parsers import JSONParser
+from django.apps import apps
+
 def index(request):
     return HttpResponse(serializers.serialize('json', User.objects.all()), content_type='application/json')
 
@@ -46,4 +53,23 @@ def register(request):
         
     else:
         ret =  JsonResponse({'status':404,'message':"not found"})
+    return ret
+
+@api_view(('POST',))
+@csrf_exempt
+def login(request):
+    if "email" in request.POST and "password" in request.POST:
+        if User.ifMailExist(request.POST['email']):
+            b = User.objects.get(email=request.POST['email'])
+            tokenH = make_password(request.POST['email']+date.today().strftime("%d/%m/%Y %H:%M:%S"))
+            if check_password(request.POST['password'], b.password):
+                ret =  Response({'token': tokenH}, status= status.HTTP_200_OK)
+                b.token = tokenH
+                b.save()
+            else:
+                ret = Response({'message': "wrong password"}, status= status.HTTP_401_UNAUTHORIZED)
+        else:
+            ret =  Response({'message': "no user with this email"}, status= status.HTTP_401_UNAUTHORIZED)
+    else:
+        ret =  Response({'message': "wrong data"}, status= status.HTTP_401_UNAUTHORIZED)
     return ret

@@ -33,11 +33,12 @@ class Game(models.Model):
 class GameSerializerAvg(serializers.ModelSerializer):
     class Meta:
         model = Game
-        fields = '__all__'
+        fields = ['id', 'description', 'name']
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)
         representation['avg'] = instance.avg
+        representation['genre_name'] = instance.genre_name
 
         return representation
 

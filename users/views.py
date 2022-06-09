@@ -71,5 +71,5 @@ def login(request):
         else:
             ret =  Response({'message': "no user with this email"}, status= status.HTTP_401_UNAUTHORIZED)
     else:
-        ret =  Response({'message': "wrong data"}, status= status.HTTP_401_UNAUTHORIZED)
+        ret =  Response({'message': "bad data"}, status= status.HTTP_401_UNAUTHORIZED)
     return ret

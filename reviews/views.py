@@ -17,7 +17,7 @@ def add(request):
         try:
             review = float(request.POST['review'])
         except:
-            return Response({'message': review}, status= status.HTTP_401_UNAUTHORIZED)
+            return Response({'message': "review not number"}, status= status.HTTP_401_UNAUTHORIZED)
         if user is not None and apps.get_model('games.Game').objects.filter(pk=request.POST['game']).exists() and 0<=float(request.POST['review'])<=5:
             game = apps.get_model('games.Game').objects.get(pk=request.POST['game'])
 

@@ -3,7 +3,7 @@ from rest_framework import serializers
 from django.apps import apps
 
 class Comment(models.Model):
-    user = models.ForeignKey('users.User', on_delete=models.CASCADE)
+    user = models.ForeignKey('users.User',related_name='get_comments', on_delete=models.CASCADE)
     game = models.ForeignKey('games.Game',related_name='comments', on_delete=models.CASCADE)
     text = models.TextField()
     date = models.DateField()
@@ -16,6 +16,11 @@ class Comment(models.Model):
         users = apps.get_model('users.User').objects.get(pk=self.user.pk)
         return users.name
 
+    @property
+    def gamename(self):
+        game = apps.get_model('games.Game').objects.get(pk=self.user.pk)
+        return game.name
+
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
@@ -24,4 +29,13 @@ class CommentSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         representation = super().to_representation(instance)
         representation['username'] = instance.username
+        return representation
+
+class CommentSerializerUser(serializers.ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = ("text", "date")
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation['gamename'] = instance.gamename
         return representation

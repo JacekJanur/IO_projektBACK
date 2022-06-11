@@ -3,6 +3,7 @@ from django.core import serializers
 from django.http import HttpResponse
 from django.http import JsonResponse
 from .models import User
+from .models import UserSerializer
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.hashers import make_password, check_password
 from datetime import date
@@ -17,11 +18,23 @@ from django.apps import apps
 def index(request):
     return HttpResponse(serializers.serialize('json', User.objects.all()), content_type='application/json')
 
+# @api_view(('GET',))
+# def detail(request, user_id):
+
+#     if User.objects.filter(pk=user_id).exists():
+#         user = User.objects.get(pk=user_id)
+#         ret = HttpResponse(serializers.serialize("json", [user]), content_type='application/json')
+#     else:
+#         ret =  JsonResponse({'status':404,'message':"user not found"})
+#     return ret
+
+@api_view(('GET',))
 def detail(request, user_id):
 
     if User.objects.filter(pk=user_id).exists():
         user = User.objects.get(pk=user_id)
-        ret = HttpResponse(serializers.serialize("json", [user]), content_type='application/json')
+        serializer = UserSerializer(user)
+        ret = Response(serializer.data, status= status.HTTP_200_OK)
     else:
         ret =  JsonResponse({'status':404,'message':"user not found"})
     return ret
@@ -31,7 +44,7 @@ def reviews(request, user_id):
         reviews = User.objects.get(pk=user_id).reviews()
         ret = HttpResponse(serializers.serialize("json", reviews), content_type='application/json')
     else:
-        ret =  JsonResponse({'status':404,'message':"reviews not found"})
+        ret =  JsonResponse({'status':404,'message':"user not found"})
     return ret
 
 @csrf_exempt

@@ -1,5 +1,10 @@
 from django.db import models
 from django.apps import apps
+from rest_framework import serializers
+from reviews.models import ReviewSerializer
+from reviews.models import Review
+from comments.models import CommentSerializerUser
+
 
 class User(models.Model):
     name = models.CharField(max_length=50)
@@ -13,8 +18,7 @@ class User(models.Model):
 
 
     def reviews(self):
-        reviews = apps.get_model('reviews.Review')
-        return reviews.objects.filter(user=self)
+        return Review.objects.filter(user=self)
 
     def ifMailExist(email):
         try:
@@ -31,3 +35,14 @@ class User(models.Model):
             # Unable to find a user, this is fine
             return None
         return match
+
+    @property
+    def get_reviews(self):
+        return self.reviews
+
+class UserSerializer(serializers.ModelSerializer):
+    get_comments = CommentSerializerUser(many=True, required=False)
+
+    class Meta:
+        model = User
+        fields = ['id', 'name', "get_comments"]

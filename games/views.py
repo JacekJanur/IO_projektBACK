@@ -31,6 +31,24 @@ def detail(request, game_id):
     return ret
 
 @api_view(('GET',))
+def search(request, game_search):
+    nothing = True
+    if Game.objects.filter(name__icontains=game_search).exists():
+        games = Game.objects.filter(name__icontains=game_search)
+        serializer = GameSerializerAvg(games, many=True)
+        ret = Response(serializer.data, status= status.HTTP_200_OK)
+        nothing = False
+
+    else:
+        ret = Response({'message':"games not found"}, status= status.HTTP_404_NOT_FOUND)
+
+    return ret
+
+
+
+
+
+@api_view(('GET',))
 def reviews(request, game_id):
     if Game.objects.filter(pk=game_id).exists():
         reviews = Game.objects.get(pk=game_id).reviews()

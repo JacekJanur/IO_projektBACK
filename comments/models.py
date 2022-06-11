@@ -34,7 +34,7 @@ class CommentSerializer(serializers.ModelSerializer):
 class CommentSerializerUser(serializers.ModelSerializer):
     class Meta:
         model = Comment
-        fields = ("text", "date")
+        fields = ("text", "date", "game")
     def to_representation(self, instance):
         representation = super().to_representation(instance)
         representation['gamename'] = instance.gamename

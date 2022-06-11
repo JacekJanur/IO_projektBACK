@@ -42,7 +42,7 @@ class UserViewTest(TestCase):
 			{'message': "no user with this email"}
 		)
 
-		response = c.post('/users/login', {'email': 'fred@wp.pl', 'password': 'secret'})
+		response = c.post('/users/login', {'email': 'fred@wp.pl', 'password': 'secret123'})
 		self.assertJSONEqual(
 			str(response.content, encoding='utf8'),
 			{'message': "wrong password"}

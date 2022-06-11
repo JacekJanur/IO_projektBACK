@@ -13,12 +13,12 @@ class Comment(models.Model):
 
     @property
     def username(self):
-        users = apps.get_model('users.User').objects.get(pk=self.user.pk)
+        users = apps.get_model('users.User').objects.get(pk=self.user.id)
         return users.name
 
     @property
     def gamename(self):
-        game = apps.get_model('games.Game').objects.get(pk=self.user.pk)
+        game = apps.get_model('games.Game').objects.get(pk=self.game.id)
         return game.name
 
 class CommentSerializer(serializers.ModelSerializer):

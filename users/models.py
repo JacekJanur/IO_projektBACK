@@ -14,7 +14,7 @@ class User(models.Model):
 
     
     def __str__(self):
-        return '%s %s' % (self.email, self.name)
+        return '%s' % (self.email)
 
 
     def reviews(self):

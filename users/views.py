@@ -36,7 +36,7 @@ def detail(request, user_id):
         serializer = UserSerializer(user)
         ret = Response(serializer.data, status= status.HTTP_200_OK)
     else:
-        ret =  JsonResponse({'status':404,'message':"user not found"})
+        ret =  Response({'message': "User comments not found"}, status= status.HTTP_401_UNAUTHORIZED)
     return ret
 
 def reviews(request, user_id):

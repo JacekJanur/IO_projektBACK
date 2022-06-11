@@ -9,7 +9,7 @@ class User(models.Model):
 
     
     def __str__(self):
-        return '%s %s' % (self.email, self.name)
+        return '%s %s' % (self.email)
 
 
     def reviews(self):

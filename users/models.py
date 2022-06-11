@@ -7,6 +7,11 @@ class User(models.Model):
     password = models.CharField(max_length=200)
     token = models.CharField(max_length=200, default=None, blank=True, null=True)
 
+    
+    def __str__(self):
+        return '%s' % (self.email)
+
+
     def reviews(self):
         reviews = apps.get_model('reviews.Review')
         return reviews.objects.filter(user=self)

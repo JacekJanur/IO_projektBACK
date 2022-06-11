@@ -14,6 +14,10 @@ class Game(models.Model):
     photo = models.CharField(max_length=200, default="default.jpg")
     image = models.ImageField(upload_to='images/', null=True, blank=True, default='images/default.jpg')
 
+    def __str__(self):
+        return '%s' % (self.name)
+
+
     def reviews(self):
         reviews = apps.get_model('reviews.Review')
         return reviews.objects.filter(game=self)

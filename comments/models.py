@@ -8,6 +8,9 @@ class Comment(models.Model):
     text = models.TextField()
     date = models.DateField()
 
+    def __str__(self):
+        return 'User: %s Game: %s Text: %s' % (self.user, self.game, self.text)
+
     @property
     def username(self):
         users = apps.get_model('users.User').objects.get(pk=self.user.pk)
